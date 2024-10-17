@@ -15,5 +15,5 @@ app.use('/', routesSonho);
 app.use('/', routesCategoria);
 
 app.listen(5000, ()=>{
-    console.log('SERVIDOR RODANDO EM - http://localhost:5000');
+    console.log('SERVIDOR RODANDO EM - http://localhost:5173/');
 });
