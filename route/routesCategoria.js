@@ -1,9 +1,7 @@
 const express = require('express');
-
-
 const modelCategoria = require('../model/modelCategoria');
-
 const router = express.Router();
+
 
 router.post('/inserirCategoria', (req, res)=>{
 
@@ -36,8 +34,7 @@ router.post('/inserirCategoria', (req, res)=>{
 
 });
 
-
-router.get('/listagemCateorias', (req, res)=>{
+router.get('/listagemCategorias', (req, res)=>{
 
     modelCategoria.findAll()
     .then(
@@ -61,12 +58,10 @@ router.get('/listagemCateorias', (req, res)=>{
         );
     });
 
-    // return res.status(200).json({status:'TESTE DE LISTAGEM DE LIVROS!'});
 
 });
 
-/* ROTA DE LISTAGEM DE LIVRO POR CÓDIGO DE LIVRO*/
-router.get('/listagemCategoria/:cod_categoria', (req, res)=>{
+router.get('/listagemCategorias/:cod_categoria', (req, res)=>{
 
     let { cod_categoria } = req.params;
 
@@ -123,7 +118,6 @@ router.delete('/excluirCategoria/:cod_categoria', (req, res)=>{
 
 });
 
-/* ROTA DE ALTERAÇÃO DE CATEORIA */
 router.put('/alterarCategoria', (req, res)=>{
 
     let { cod_categoria, nome_categoria } = req.body;

@@ -1,8 +1,5 @@
 const express = require('express');
-
-const modelLivro = require('../model/modelSonhos');
-
-
+const modelSonho = require('../model/modelSonho');
 const router = express.Router();
 
 
@@ -12,16 +9,17 @@ router.get('/', (req, res)=>{
 
 });
 
-
 router.post('/inserirSonho', (req, res)=>{
 
-    let { sonho,valor, descricao } = req.body;
+    let { cod_categoria, nome_sonho, valor_sonho, descricao_sonho } = req.body;
 
-    modelLivro.create(
+    modelSonho.create(
         {
-            sonho,
-            valor,
-            descricao
+
+            cod_categoria,
+            nome_sonho,
+            valor_sonho,
+            descricao_sonho
         }
     )
     .then(
@@ -29,7 +27,7 @@ router.post('/inserirSonho', (req, res)=>{
             return res.status(201).json(
                 {
                     errorStatus:false,
-                    mensageStatus:'Sonho inserido com sucesso'
+                    mensageStatus:'Sonho cadastrado com sucesso'
                 }
             );
         }
@@ -38,18 +36,17 @@ router.post('/inserirSonho', (req, res)=>{
         return res.status(400).json(
             {
                 errorStatus:true,
-                mensageStatus:'Erro ao inserir o sonho',
+                mensageStatus:'Houve um erro ao inserir',
                 errorObject:error
             }
         );
     });
 
-    // return res.status(200).json({status:'TESTE DE INSERÇÃO!'});
-
+   
 });
 
 
-router.get('/listagemSonhos', (req, res)=>{
+router.get('/listarSonho', (req, res)=>{
 
     modelSonho.findAll()
     .then(
@@ -57,7 +54,7 @@ router.get('/listagemSonhos', (req, res)=>{
             return res.status(201).json(
                 {
                     errorStatus:false,
-                    mensageStatus:'Sonhos listados com sucesso',
+                    mensageStatus:'Sonhos listados',
                     data:response
                 }
             );
@@ -67,28 +64,27 @@ router.get('/listagemSonhos', (req, res)=>{
         return res.status(400).json(
             {
                 errorStatus:true,
-                mensageStatus:'Erro ao listar os sonhos',
+                mensageStatus:'houve erro ao listar',
                 errorObject:error
             }
         );
     });
 
-    // return res.status(200).json({status:'TESTE DE LISTAGEM!'});
 
 });
 
 
-router.get('/listagemSonhos/:id', (req, res)=>{
+router.get('/listarSonho/:cod_sonho', (req, res)=>{
 
-    let { id } = req.params;
+    let { cod_sonho } = req.params;
 
-    modelLivro.findByPk(id)
+    modelSonho.findByPk(cod_sonho)
     .then(
         (response)=>{
             return res.status(201).json(
                 {
                     errorStatus:false,
-                    mensageStatus:'Recuperado com sucesso',
+                    mensageStatus:'Sonho recuperado',
                     data:response
                 }
             );
@@ -98,29 +94,29 @@ router.get('/listagemSonhos/:id', (req, res)=>{
         return res.status(400).json(
             {
                 errorStatus:true,
-                mensageStatus:'Erro ao recuperar',
+                mensageStatus:'Erro ao recuperar o sonho',
                 errorObject:error
             }
         );
     });
 
-    // return res.status(200).json({status:'TESTE DE LISTAGEM COM BUSCA POR CÓDIGO !'});
+   
 
 });
 
 
-router.delete('/excluirSonho/:id', (req, res)=>{
+router.delete('/excluirSonho/:cod_sonho', (req, res)=>{
 
-    let { id } = req.params;
+    let { cod_sonho } = req.params;
 
-    modelLivro.destroy(
-        {where:{id}}
+    modelSonho.destroy(
+        {where:{cod_sonho}}
     ).then(
         ()=>{
             return res.status(201).json(
                 {
                     errorStatus:false,
-                    mensageStatus:'SONHO EXCLUIDO COM SUCESSO'
+                    mensageStatus:'Sonho deletado'
                 }
             );
         }
@@ -129,34 +125,33 @@ router.delete('/excluirSonho/:id', (req, res)=>{
         return res.status(400).json(
             {
                 errorStatus:true,
-                mensageStatus:'HOUVE UM ERRO AO EXCLUIR',
+                mensageStatus:'Erro ao deletar',
                 errorObject:error
             }
         );
     });
 
-    // return res.status(200).json({status:'TESTE DE EXCLUSÃO!'});
 
 });
 
 
 router.put('/alterarSonho', (req, res)=>{
 
-    let { id, sonho, valor, descricao } = req.body;
+    let { cod_sonho, nome_sonho, valor_sonho, descricao_sonho } = req.body;
 
-    modelSonhos.update(
+    modelSonho.update(
         {
-            sonho,
-            valor,
-            descricao
+            nome_sonho,
+            valor_sonho,
+            descricao_sonho
         },
-        {where:{id}}
+        {where:{cod_sonho}}
     ).then(
         ()=>{
             return res.status(201).json(
                 {
                     errorStatus:false,
-                    mensageStatus:'ALTERADO COM SUCESSO'
+                    mensageStatus:'Sonho alterado'
                 }
             );
         }
@@ -165,13 +160,13 @@ router.put('/alterarSonho', (req, res)=>{
         return res.status(400).json(
             {
                 errorStatus:true,
-                mensageStatus:'HOUVE UM ERRO AO ALTERAR',
+                mensageStatus:'erro ao alterar',
                 errorObject:error
             }
         );
     });
 
-    // return res.status(200).json({status:'TESTE DE ALTERAÇÃO!'});
+
 
 });
 
